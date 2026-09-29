@@ -1,9 +1,9 @@
-#  Intelligent Hybrid Recommendation System
+# Intelligent Hybrid Recommendation System
 
 An interactive, data-driven web application built with Python and Streamlit that parses user profile registries and logs historical feedback interactions. This project demonstrates backend data pipeline integration with automated UI layouts.
 
 ## 🚀 Live Demo
-* [Click here to view the live interactive application!](https://user-feedback-dashboard-nru79npmefjylm9jpbrs6u.streamlit.app/)
+* [Click here to view the live interactive application!](https://streamlit.app)
 
 ## 🛠️ Tech Stack & Architecture
 * *Frontend UI:* Streamlit (leveraging flexible screen-stretch components)
