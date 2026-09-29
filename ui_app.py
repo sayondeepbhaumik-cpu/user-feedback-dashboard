@@ -108,11 +108,23 @@ if df_users is not None:
                             "MBTI Type": row['mbti'],
                             "Compatibility Score": f"{score}%"
                         })
-                
                 # Rank listings based on calculated values
-                ranked_df = pd.DataFrame(all_candidates).sort_values(by="Compatibility Score", ascending=False).head(5)
-                ranked_df.index = range(1, 6)
-                
-                st.balloons()
-                st.write("Below are the top 5 highest-ranked profiles specifically calculated using this user's learned preference weights:")
-                st.table(ranked_df)
+                ranked_df = pd.DataFrame(all_candidates)
+                if not ranked_df.empty:
+                    ranked_df["_score"] = pd.to_numeric(
+                        ranked_df["Compatibility Score"].str.rstrip("%"),
+                        errors="coerce",
+                    )
+                    ranked_df = ranked_df.sort_values(
+                        by="_score", ascending=False
+                    ).head(5).drop(columns="_score")
+                    ranked_df.index = range(1, len(ranked_df) + 1)
+                    # Convert all user IDs to real human names dynamically.
+                    name_dict = dict(
+                        zip(df_users['user_id'].astype(str), df_users['name'].astype(str))
+                    )
+                    if 'Rank ID' in ranked_df.columns:
+                        ranked_df['Rank ID'] = ranked_df['Rank ID'].astype(str).map(name_dict).fillna(ranked_df['Rank ID'])
+                    st.balloons()
+                    st.write("Below are the top 5 highest-ranked profiles specifically calculated using this user's learned preference weights:")
+                    st.table(ranked_df)
